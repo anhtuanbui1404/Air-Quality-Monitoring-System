@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Senior Project Group 3</title>
+
+    <!-- NEW UPDATE | DATE" 29/9/2024: CSS File -->
+    <link rel="stylesheet" href="/fontawesome-free-6.6.0-web/css/all.css">
+    <script src="fontawesome-free-6.6.0-web/js/all.js"></script>
+    <script src="javascript/weatherapi.js"></script>
+
+    
+    <!-- khởi tạo Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+    <!-- khởi tạo các tính năng cần sử dụng trong firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
+    <!-- khởi tạo highchartsjs để vẽ biểu đồ-->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <!-- khởi tạo jquery để sử dụng định dang bảng biểu-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--tham chiếu đến tệp stylesheet (file .css)-->
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+
+  </head>
+
+  <body class="" onload="getWeather();">
+    <!--TOP BAR-->
+    <div class="topnav">
+    <div>
+      <h1>Senior Project Group 3 - Application</h1>
+      <h2>Air Quality Monitoring System</h2>
+    </div>
+
+    <!--AUTHENTICATION BAR (người dùng/và nút đăng xuất)-->
+    <div id="authentication-bar" style="display: none;">
+      <p><span id="authentication-status">User logged in:</span>
+        <span id="user-details">USEREMAIL</span>
+        <button type="submit" id="login-button"><a href="/" id="logout-link">Logout</a></button>
+      </p>
+    </div>
+  </div>
+
+    <!--LOGIN FORM-->
+    <form id="login-form" style="display: none;">
+      <div class="form-elements-container">
+        <label for="input-email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Username" id="input-email" required>
+
+        <label for="input-password"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" id="input-password" required>
+
+        <button type="submit" id="login-button">Login</button>
+        <p id="error-message" style="color:red;"></p>
+      </div>
+    </form>
+
+    <!--CONTENT (các chỉ số cảm biến)-->
+    <div class="content-sign-in" id="content-sign-in" style="display: none;">
+      <article>
+        <div class="weather-infor">
+          <h1>Dữ liệu thời tiết</h1>
+          <div id="weatherResult">
+            <h2></h2>
+            <p class="temp"></p>
+            <p class="condition"></p>
+            <div class="weather-details">
+              <div class="detail">
+                <span>AQI</span>
+                <span class="value air-quality"></span>
+              </div>
+              <div class="detail">
+                <span>Gió</span>
+                <span class="value wind"></span>
+              </div>
+              <div class="detail">
+                <span>Tầm nhìn</span>
+                <span class="value visibility"></span>
+              </div>
+              <div class="detail">
+                <span>Áp suất</span>
+                <span class="value pressure"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+      <!--LAST UPDATE-->
+      <p><span class ="date-time">Last update: <span id="lastUpdate"></span></span></p>
+      <p>
+        Cards: <input type="checkbox" id="cards-checkbox" name="cards-checkbox" checked>
+        Gauges: <input type="checkbox" id="gauges-checkbox" name="gauges-checkbox" checked>
+        Charts: <input type="checkbox" id="charts-checkbox" name="charts-checkbox" unchecked>
+      </p>
+      <div id="cards-div">
+        <div class="cards">
+          <!--TEMPERATURE-->
+          <div class="card">
+            <p><i class="fas fa-thermometer-half" style="color:#059e8a;"></i> TEMPERATURE</p>
+            <p><span class="reading"><span id="temp"></span> &deg;C</span></p>
+          </div>
+          <!--HUMIDITY-->
+          <div class="card">
+            <p><i class="fas fa-tint" style="color:#00add6;"></i> HUMIDITY</p>
+            <p><span class="reading"><span id="hum"></span> &percnt;</span></p>
+          </div>
+          <!--CO2-->
+          <div class="card">
+            <p><i class="fas fa-mq135-double-down" style="color:#e1e437;"></i> C02</p>
+            <p><span class="reading"><span id="co2"></span> ppm</span></p>
+          </div>
+          <!--CO-->
+          <div class="card">
+            <p><i class="fas fa-mq135-half" style="color:#059e8a;"></i> CO</p>
+            <p><span class="reading"><span id="co"></span> ppm</span></p>
+          </div>
+          <!--NH4-->
+          <div class="card">
+            <p><i class="fas fa-mq135-tint" style="color:#00add6;"></i> NH4</p>
+            <p><span class="reading"><span id="nh4"></span> ppm</span></p>
+          </div>
+          <!--Dust Density-->
+          <div class="card">
+            <p><i class="fas fa-mq135-double-down" style="color:#e1e437;"></i> Dust Density</p>
+            <p><span class="reading"><span id="dustDensity"></span> ug/m3</span></p>
+          </div>
+        </div>
+      </div>
+      
+      <!--CHARTS-->
+      <div id="charts-div" style="display:none">
+        <!--NƠI CẬP NHẬP SỐ LƯỢNG DỮ LIỆU-->
+        <div>
+          <p> Number of readings: <input type="number" id="charts-range"></p>
+        </div>
+        <!--BIỂU ĐỒ NHIỆT ĐỘ (ĐỘ C)-->
+        <div class="cards">
+          <div class="card">
+            <p><i class="fas fa-thermometer-half" style="color:#059e8a;"></i> TEMPERATURE CHART</p>
+            <div id="chart-temperature" class="chart-container"></div>
+          </div>
+        </div>
+        <!--BIỂU ĐỒ ĐỘ ẨM-->
+        <div class="cards">
+          <div class="card">
+            <p><i class="fas fa-tint" style="color:#00add6;"></i> HUMIDITY CHART</p>
+            <div id="chart-humidity" class="chart-container"></div>
+          </div>
+        </div>
+        <!--BIỂU ĐỒ CO2-->
+        <div class="cards">
+          <div class="card">
+            <p><i class="fas fa-co2" style="color:#d63900;"></i> CO2 CHART</p>
+            <div id="chart-co2" class="chart-container"></div>
+          </div>
+        </div>
+      </div>
+
+    <!--NÚT XỬ LÝ CÁC DỮ LIỆU-->
+    <p>
+      <!-- Nút xem dữ liệu -->
+      <button id="view-data-button">View all data</button>
+      <!-- Nút ẩn dữ liệu -->
+      <button id="hide-data-button" style= "display:none;">Hide data</button>
+      <!-- Nút xoas dữ liệu -->
+      <button id="delete-button" class="deletebtn">Delete data</button>
+    </p>
+    <!--mẫu để xóa dữ liệu-->
+    <div id="delete-modal" class="modal" sytle="display:none">
+      <span onclick = "document.getElementById('delete-modal').style.display='none'" class="close" title="Close Modal">×</span>
+      <form id= "delete-data-form" class="modal-content" action="/">
+        <div class="container">
+          <h1>Delete Data</h1>
+          <p>Are you sure you want to delete all data from database?</p>
+          <div class="clearfix">
+            <button type="button" onclick="document.getElementById('delete-modal').style.display='none'" class="cancelbtn">Cancel</button>
+            <button type="submit" onclick="document.getElementById('delete-modal').style.display='none'" class="deletebtn">Delete</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!--BẢNG DỮU LIỆU-->
+    <div class ="cards">
+      <div class="card" id="table-container" style= "display:none;">
+        <table id="readings-table">
+            <tr id="theader">
+              <th>Timestamp</th>
+              <th>Temp (ºC)</th>
+              <th>Humidity (%)</th>
+              <th>CO2 (ppm)</th>
+              <th>CO (ppm)</th>
+              <th>NH4 (ppm)</th>
+              <th>Dust Density (ug/m3)</th>
+            </tr>
+            <tbody id="tbody">
+            </tbody>
+        </table>
+        <p><button id="load-data" style= "display:none;">More results...</button></p>
+      </div>
+    </div>
+
+  </div>
+
+    <!--SỬ DỤNG NODE.JS ĐÃ THIẾT LẬP-->
+    <script src="javascript/auth.js"></script>
+    <script src="javascript/charts-definition.js"></script>
+    <script src="javascript/index.js"></script>
+    <script src="javascript/connectRTDB.js"></script>
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer_main">
+          <div class="container2">
+              <div class="row">
+                  <div class="col-md-6">
+                      <h3>Thiết kế hệ thống theo dõi chất lượng không khí sử dụng nền tảng firebase</h3>
+                      <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d7447.125475906863!2d105.747921!3d21.050175!3m2!1i1024!2i768!4f13.1!5e0!3m2!1svi!2s!4v1718332858937!5m2!1svi!2s" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                      <p>Địa chỉ văn phòng: 298 Cầu Diễn, Quận Bắc Từ Liêm, Hà Nội</p>
+                  </div>
+                  <div class="col-md-9">   <!-- THAY TÊN CLASS Ở ĐÂY -->
+                      <h3>Liên hệ dịch vụ</h3>
+                      <p>Số điện thoại: 0965968397</p>
+                      <a href="https://www.facebook.com/LoveDoraemonMovies/" class="footer-item__link" ><img src="imgFolder/fb.png" alt="fb" width="50px">Facebook</a></button>
+                      <a href="https://www.instagram.com/anhtuanbui1404" class="footer-item__link"><img src="imgFolder/ins.png" alt="ins" width="50px">Instagram</a></button>
+                      <a href="https://zalo.me/g/ststwx765" class="footer-item__link"><img src="imgFolder/zl.png" alt="zl" width="50px">Zalo</a></button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="footer__bottom">
+        <div class="col-md-0" style="background-color: rgb(8, 4, 0);">   <!-- THAY TÊN CLASS Ở ĐÂY -->
+          <p>© 2024 - Bản quyền thuộc về nhóm 3 ĐACN </p>
+        </div>
+        </div>
+  </footer>
+  </body>
+ 
+</html>

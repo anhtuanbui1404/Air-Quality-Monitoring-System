@@ -1,0 +1,397 @@
+html {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    display: inline-block;
+    text-align: center;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+  }
+  .topnav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color:   #049faa;
+    color: white;
+    padding: 10px 20px;
+  }
+  .topnav h1, .topnav h2 {
+    margin: 0;
+  }
+  .topnav h2 {
+    font-size: 1.2em;
+    margin-top: 5px;
+  }
+  #authentication-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    background-color: #049faa;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ccc;
+  }
+  #authentication-bar p {
+    margin: 0;
+  }
+  #authentication-bar span {
+    margin-right: 10px;
+  }
+  #logout-link {
+    text-decoration: none;
+    
+  }
+  .topnav button {
+    background-color: #f44336;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    padding: 10px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size:medium;
+}
+.topnav span {
+    color: rgb(255, 255, 255);
+    padding: 10px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: large;
+}
+  #logout-link:hover {
+    text-decoration: underline;
+  }
+.content {
+    padding: 20px;
+}
+
+.card {
+    background-color: white;
+    box-shadow: 2px 2px 12px 1px rgba(140,140,140,.5);
+    padding: 5%;
+}
+
+.cards {
+    max-width: 800px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    display: grid;
+    grid-gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 2fr));
+}
+
+.reading {
+    color: #193036;
+}
+
+.date-time{
+    font-size: 0.8rem;
+    color: #1282A2;
+}
+
+button {
+    background-color: #049faa;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+button:hover {
+   opacity: 0.8;
+}
+.deletebtn{
+    background-color: #c52c2c;
+}
+
+.form-elements-container{
+    padding: 16px;
+    width: 250px;
+    margin: 0 auto;
+}
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+table {
+    width: 100%;
+    text-align: center;
+    font-size: 0.8rem;
+}   
+tr, td {
+    padding: 0.25rem;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+tr:hover {
+    background-color: #ddd;
+}
+th {
+    position: sticky;
+    top: 0;
+    background-color: #50b8b4;
+    color: white;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: #474e5d;
+    padding-top: 50px;
+}
+  
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+  
+/* Style the horizontal ruler */
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
+
+/* The Modal Close Button (x) */
+.close {
+    position: absolute;
+    right: 35px;
+    top: 15px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #f1f1f1;
+}
+
+.close:hover,
+.close:focus {
+    color: #f44336;
+    cursor: pointer;
+}
+
+/* Clear floats */
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* Change styles for cancel button and delete button on extra small screens */
+@media screen and (max-width: 300px) {
+    .cancelbtn, .deletebtn {
+        width: 100%;
+    }
+}
+body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
+#message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px 16px; border-radius: 3px; }
+#message h3 { color: #888; font-weight: normal; font-size: 16px; margin: 16px 0 12px; }
+#message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
+#message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
+#message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
+#message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
+#message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
+#load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
+@media (max-width: 600px) {
+  body, #message { margin-top: 0; background: white; box-shadow: none; }
+  body { border-top: 16px solid #ffa100; }
+}
+
+
+/* FOOTER */
+footer {
+    width: 100%;
+    position: relative;
+}
+.footer_main {
+    background-color: #e6e6e6;
+    color: #000000;
+    text-align: center;
+    padding: 20px 0;
+}
+.container2 {
+    max-width: 960px;
+    margin: 0 auto;
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.col-md-6 {
+    width: 50%;
+    padding-left: 100px 0 ;
+    list-style:none ;
+    box-sizing: border-box;
+}
+.footer-item__link{
+    text-decoration: none;
+    font-size: 1.2rem;
+    color:#1e1c1c;
+    padding:2px 0;
+    display: flex;
+    margin-left: 3;
+}
+.footer-item__link:hover {
+    color:#c52c2c;
+}
+.footer_bottom {
+    background-color: bisque;
+    padding:8px 0;
+    margin-top: 36px;
+}
+.footer_bottom p {
+    margin: 0;
+    text-align: center;
+    font-size: 3px;
+    color:#1e1c1c;
+    width: 100%;
+}
+/* THÊM PHẦN NÀY */
+.col-md-0 {
+    color: aliceblue;
+    text-align: center;
+    padding: 3px 0;
+}
+
+
+    /* NEW UPDATE | 5/10/2024: Weather Box */
+    
+    .weather-infor {
+        background-color: #2d3756;
+        padding: 20px;
+        border-radius: 0px;
+        width:97%;
+        color: white;
+        font-family: Arial, sans-serif;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .weatherResult{
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .weather-infor h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+        color: var(--neutral-color);
+        
+      }
+      
+      #weatherResult h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+      
+      #weatherResult p {
+        font-size: 16px;
+        margin: 5px 0;
+      }
+      
+      #weatherResult img {
+        width: 50px;
+        vertical-align: middle;
+        margin-right: 10px;
+      }
+      
+      button#getWeather {
+        background-color: #536dfe;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      
+      button#getWeather:hover {
+        background-color: #455ede;
+      }
+      
+      .weather-details {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
+      }
+      
+      .weather-details .detail {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+      }
+      
+      .weather-details .detail span {
+        font-size: 16px;
+      }
+      
+      .weather-details .detail .value {
+        font-size: 14px;
+        font-weight: bold;
+      }
+      
+      .weather-details .detail img {
+        width: 25px;
+        height: 25px;
+      }
+      
+      .air-quality {
+        color: #f57c00;
+      }
+
+      :root{
+        --text-color: #333;
+        --warning-color: #FFC107;
+        --caution-color: #FF9800;
+        --danger-color: #F44336;
+        --neutral-color: #fff;
+        --safety-color: #008000;
+    }
+    
+    html {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        display: inline-block;
+        margin-left: 10px;
+        margin-right: 10px;
+        position: relative;
+    }
+    
+    body {
+        margin: 0;
+        width: 100%;
+    }
+        /* NEW UPDATE | 5/10/2024: Section */
+        section{
+            padding-top: 120px;
+        }
+    
+        article{
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+    
+        
